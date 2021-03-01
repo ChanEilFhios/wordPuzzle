@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Answer Test</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Heading</h1>
+    Tall plants that wood comes from:
+    <quiz-answer answer="trees"></quiz-answer>
+    <input type="button" onclick="toggleDisplay('trees')" value="toggle answer"/>
+    <select onchange="setStatus(this, 'trees')">
+      <option>unanswered</option>
+      <option>correct</option>
+      <option>incorrect</option>
+    </select>
+    <br />
+    unscramble boiedhdun:<quiz-answer class="highlight" answer="hidebound"></quiz-answer>
+    <input type="button" onclick="toggleDisplay('hidebound')" value="toggle answer"/>
+    <select onchange="setStatus(this, 'hidebound')">
+      <option>unanswered</option>
+      <option>correct</option>
+      <option>incorrect</option>
+    </select>
+    <script src="index.js"></script>
+    <script>
+      const [trees, hidebound] = document.body.querySelectorAll("quiz-answer")
+
+      function setStatus(select, which) {
+        switch (which) {
+          case 'trees':
+            trees.status = select.value
+            break
+          case 'hidebound':
+            hidebound.status = select.value
+            break
+        }
+      }
+
+      function toggleDisplay(which) {
+        switch (which) {
+          case 'trees':
+            trees.show = trees.show === 'false' ? 'true' : 'false'
+            break
+          case 'hidebound':
+            hidebound.show = hidebound.show === 'false' ? 'true' : 'false'
+            break
+        }
+      }
+    </script>
+  </body>
+</html>

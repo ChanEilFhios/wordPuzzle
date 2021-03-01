@@ -1,0 +1,7 @@
+*:not(:defined) {
+  visibility: hidden;
+}
+
+.highlight {
+  font-weight: bold;
+}
