@@ -17,6 +17,11 @@ body {
   align-items: center;
   grid-area: letters;
 }
+#layout-letters div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 #layout-guess {
   grid-area: guess;
