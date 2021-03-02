@@ -2,6 +2,46 @@
   visibility: hidden;
 }
 
-.highlight {
-  font-weight: bold;
+body {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 
+    "letters answers"
+    "guess answers";
+}
+
+#layout-letters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-area: letters;
+}
+
+#layout-guess {
+  grid-area: guess;
+}
+
+#layout-answers {
+  grid-area: answers;
+  text-align: center;
+}
+
+#display-answers {
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.display-answers {
+  margin-left: .2em;
+  margin-right: .2em;
+}
+
+.nine {
+  font-weight: bold
+}
+
+#display-repeat {
+  color: darkgoldenrod;
 }
