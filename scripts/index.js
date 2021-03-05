@@ -1,4 +1,5 @@
 import {getRandomIndexFromArray, getRandomFromArray, sortCharsInStr} from './utilities'
+import state from './state'
 
 const collectWords = words => words.map(wordEntry => ({word: wordEntry.word, level: wordEntry.level, guessed: false}))
 const collectSubWords = subWords => subWords.flatMap(key => collectWords(allWords[key].words))
@@ -14,8 +15,10 @@ function setupGame() {
         optionalLetters: answerLetters.filter((a, idx) => idx !== requiredLetterIndex),
         words: collectSubWords(allWords[sortCharsInStr(answerWord)].subwords)
                 .sort((a, b) => (a.word < b.word) ? -1 : 1),
-        guesses: []
+        guesses: [],
+        gameOver: false
     }
 }
 
-console.log(setupGame())
+state.initializeState(setupGame())
+state.dumpState()

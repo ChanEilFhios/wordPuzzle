@@ -1,7 +1,7 @@
 let state
 const actions = {}
 
-export default state = {
+export default {
   initializeState: initialState => {
     if (!state) {
       state = initialState
