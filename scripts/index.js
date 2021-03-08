@@ -1,8 +1,10 @@
 import {getRandomIndexFromArray, getRandomFromArray, sortCharsInStr} from './utilities'
 import state from './state'
 
-const collectWords = words => words.map(wordEntry => ({word: wordEntry.word, level: wordEntry.level, guessed: false}))
-const collectSubWords = subWords => subWords.flatMap(key => collectWords(allWords[key].words))
+const collectWords = (words, requiredLetter) => words
+.filter(wordEntry => wordEntry.word.includes(requiredLetter))
+.map(wordEntry => ({word: wordEntry.word, level: wordEntry.level, guessed: false}))
+const collectSubWords = (subWords, requiredLetter) => subWords.flatMap(key => collectWords(allWords[key].words, requiredLetter))
 
 function setupGame() {
   const answerWord = getRandomFromArray(nines)
@@ -13,7 +15,7 @@ function setupGame() {
     answerWord,
     requiredLetter: answerLetters[requiredLetterIndex],
     optionalLetters: answerLetters.filter((a, idx) => idx !== requiredLetterIndex),
-    words: collectSubWords(allWords[sortCharsInStr(answerWord)].subwords)
+    words: collectSubWords(allWords[sortCharsInStr(answerWord)].subwords, answerLetters[requiredLetterIndex])
         .sort((a, b) => (a.word < b.word) ? -1 : 1),
     guesses: [],
     gameOver: false
