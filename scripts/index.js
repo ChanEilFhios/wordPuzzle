@@ -20,8 +20,28 @@ function setupGame() {
     }
 }
 
+const attachRenderer = (elementSelector, renderer) => {
+    const element = document.body.querySelector(elementSelector)
+    return (state => {
+        renderer(state, element)
+    })
+}
+
 window.state = state
 
-state.initializeState(setupGame())
 state.registerAction("new-word", state => setupGame())
+state.registerRenderer(attachRenderer("flower-layout", (state, element) => {
+    const optionals = [...state.optionalLetters]
+    for (let i = 0; i < element.children.length; i++) {
+        if (i === 0) {
+            element.children[0].textContent = state.requiredLetter.toUpperCase()
+        } else {
+            const rndIdx = getRandomIndexFromArray(optionals)
+
+            element.children[i].textContent = optionals[rndIdx].toUpperCase()
+            optionals.splice(rndIdx, 1)
+        }
+    }
+}))
+state.initializeState(setupGame())
 state.dumpState()
