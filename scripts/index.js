@@ -85,4 +85,6 @@ state.registerRenderer(attachRenderer("#layout-answers", (state, element) => {
 }))
 
 state.initializeState(setupGame())
+state.wireActions()
+
 state.dumpState()
