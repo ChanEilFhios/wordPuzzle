@@ -1,4 +1,4 @@
-import {getRandomIndexFromArray, getRandomFromArray, sortCharsInStr} from './utilities'
+import {randomizeArray, getRandomIndexFromArray, getRandomFromArray, sortCharsInStr} from './utilities'
 import state from './state'
 
 const collectWords = (words, requiredLetter) => words
@@ -14,7 +14,7 @@ function setupGame() {
   return {
     answerWord,
     requiredLetter: answerLetters[requiredLetterIndex],
-    optionalLetters: answerLetters.filter((a, idx) => idx !== requiredLetterIndex),
+    optionalLetters: randomizeArray(answerLetters.filter((a, idx) => idx !== requiredLetterIndex)),
     words: collectSubWords(allWords[sortCharsInStr(answerWord)].subwords, answerLetters[requiredLetterIndex])
         .sort((a, b) => (a.word < b.word) ? -1 : 1),
     guesses: [],
@@ -43,15 +43,11 @@ state.registerAction("guess", (state, payload) => {
 })
 
 state.registerRenderer(attachRenderer("flower-layout", (state, element) => {
-  const optionals = [...state.optionalLetters]
   for (let i = 0; i < element.children.length; i++) {
     if (i === 0) {
       element.children[0].textContent = state.requiredLetter.toUpperCase()
     } else {
-      const rndIdx = getRandomIndexFromArray(optionals)
-
-      element.children[i].textContent = optionals[rndIdx].toUpperCase()
-      optionals.splice(rndIdx, 1)
+      element.children[i].textContent = state.optionalLetters[i-1].toUpperCase()
     }
   }
 }))
