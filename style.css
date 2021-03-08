@@ -30,15 +30,13 @@ body {
 #layout-answers {
   grid-area: answers;
   text-align: center;
-}
 
-#display-answers {
   display: flex;
   align-content: flex-start;
   flex-wrap: wrap;
 }
 
-.display-answers {
+quiz-answer {
   margin-left: .2em;
   margin-right: .2em;
 }
