@@ -30,6 +30,15 @@ const attachRenderer = (elementSelector, renderer) => {
 window.state = state
 
 state.registerAction("new-word", state => setupGame())
+state.registerAction("guess", (state, payload) => {
+  const foundIdx = state.words.findIndex(word => word.word === payload)
+
+  if (foundIdx > -1) {
+    state.words[foundIdx].guessed = true
+  }
+
+  return state
+})
 
 state.registerRenderer(attachRenderer("flower-layout", (state, element) => {
   const optionals = [...state.optionalLetters]
@@ -53,16 +62,22 @@ state.registerRenderer(attachRenderer("#layout-answers", (state, element) => {
   }
 
   state.words.reduce((existing, word) => {
-    if (existing[0]?.answer === word.word) {
-      element.appendChild(existing[0])
-    } else {
-      const newChild = document.createElement('quiz-answer', {is: 'quiz-answer'})
-      newChild.answer = word.word
+    let newChild
 
-      element.appendChild(newChild)
+    if (existing[0]?.answer === word.word) {
+      newChild = existing[0]
+      existing = existing.slice(1)
+    } else {
+      newChild = document.createElement('quiz-answer', {is: 'quiz-answer'})
+      newChild.answer = word.word
     }
 
-    return existing.slice(1)
+    if (word.guessed) {
+      newChild.show = "true"
+    }
+    element.appendChild(newChild)
+
+    return existing
   }, oldChildren)
 }))
 
