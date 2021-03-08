@@ -70,6 +70,9 @@ state.registerRenderer(attachRenderer("#layout-answers", (state, element) => {
     } else {
       newChild = document.createElement('quiz-answer', {is: 'quiz-answer'})
       newChild.answer = word.word
+      if (word.word.length === 9) {
+        newChild.classList.add("nine")
+      }
     }
 
     if (word.guessed) {
