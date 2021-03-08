@@ -30,6 +30,7 @@ const attachRenderer = (elementSelector, renderer) => {
 window.state = state
 
 state.registerAction("new-word", state => setupGame())
+
 state.registerRenderer(attachRenderer("flower-layout", (state, element) => {
   const optionals = [...state.optionalLetters]
   for (let i = 0; i < element.children.length; i++) {
@@ -43,5 +44,27 @@ state.registerRenderer(attachRenderer("flower-layout", (state, element) => {
     }
   }
 }))
+state.registerRenderer(attachRenderer("#layout-answers", (state, element) => {
+  let child
+  const oldChildren = []
+
+  while (child = element.firstElementChild) {
+    oldChildren.push(element.removeChild(child))
+  }
+
+  state.words.reduce((existing, word) => {
+    if (existing[0]?.answer === word.word) {
+      element.appendChild(existing[0])
+    } else {
+      const newChild = document.createElement('quiz-answer', {is: 'quiz-answer'})
+      newChild.answer = word.word
+
+      element.appendChild(newChild)
+    }
+
+    return existing.slice(1)
+  }, oldChildren)
+}))
+
 state.initializeState(setupGame())
 state.dumpState()
