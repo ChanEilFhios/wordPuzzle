@@ -20,5 +20,8 @@ function setupGame() {
     }
 }
 
+window.state = state
+
 state.initializeState(setupGame())
+state.registerAction("new-word", state => setupGame())
 state.dumpState()
