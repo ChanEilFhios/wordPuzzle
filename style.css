@@ -36,6 +36,18 @@ body {
   margin: .5em;
 }
 
+#guesses {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+}
+
+#guesses > * {
+  margin: 0em;
+}
+
 #layout-answers {
   grid-area: answers;
   text-align: center;
