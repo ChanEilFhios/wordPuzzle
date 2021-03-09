@@ -25,6 +25,14 @@ body {
 
 #layout-guess {
   grid-area: guess;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#layout-guess > * {
+  margin: .5em;
 }
 
 #layout-answers {
