@@ -75,6 +75,14 @@ quiz-answer {
   font-weight: bold
 }
 
-#display-repeat {
+.repeat {
   color: darkgoldenrod;
+}
+
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: red;
 }

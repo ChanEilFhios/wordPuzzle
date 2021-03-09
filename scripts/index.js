@@ -99,8 +99,11 @@ state.registerRenderer(attachRenderer('#guesses', (state, element) => {
                               guess.repeat ?
                                 '🔁' : '√'
                               : 'X'
-  const calcGuessStyle = guess => ""
-  element.innerHTML = state.guesses.slice(0, 10).map(guess => `<p><span class="badge">${calcBadge(guess)}</span> ${guess.guess}</p>`).join('')
+  const calcGuessStyle = guess => guess.correct ?
+                                    guess.repeat ?
+                                      'repeat' : 'correct'
+                                    : 'incorrect'
+  element.innerHTML = state.guesses.slice(0, 10).map(guess => `<p class="${calcGuessStyle(guess)}"><span class="badge">${calcBadge(guess)}</span> ${guess.guess}</p>`).join('')
 }))
 
 state.initializeState(setupGame())
