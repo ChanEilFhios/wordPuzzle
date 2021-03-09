@@ -2,6 +2,34 @@ let state
 const actions = {}
 const renderers = []
 
+const fetchPayload = (elementId, parent) => {
+  const payloadElement = document.getElementById(elementId) ?? parent
+
+  return () => {
+    if (payloadElement) {
+      const value = payloadElement.value
+      payloadElement.value = ''
+      return value
+    }
+  }
+}
+
+const eventResponders = {
+  click: element => {
+    const getPayload = fetchPayload(element.getAttribute("data-action-payload"))
+    return () => fire(element.getAttribute("data-action"), getPayload())
+  },
+  keyup: element => {
+    const getPayload = fetchPayload(element.getAttribute("data-action-payload"), element)
+    const key = element.getAttribute("data-action-keycode")
+    return (event) => {
+      if (event.key === key) {
+        fire(element.getAttribute("data-action"), getPayload())
+      }
+    }
+  }
+}
+
 const fire = (action, payload) => {
   if (actions[action]) {
     state = actions[action]({...state}, payload)
@@ -32,11 +60,8 @@ export default {
     const activeElements = document.querySelectorAll('[data-action]')
     
     activeElements.forEach(element => {
-      const action = element.getAttribute("data-action")
-      const payloadElement = document.getElementById(element.getAttribute("data-payload-field"))
-      element.addEventListener("click", ()=> {
-        fire(action, payloadElement.value)
-      })
+      const event = element.getAttribute("data-action-event")
+      element.addEventListener(event, eventResponders[event](element))
     })
   }
 }

@@ -24,8 +24,8 @@
       <div>S</div>
     </flower-layout>
     <div id="layout-guess">
-      <input id="guess-text" type="text" />
-      <input data-action="guess" data-payload-field="guess-text" type="button" value="Guess"/>
+      <input data-action="guess" data-action-event="keyup" data-action-keycode="Enter" id="guess-text" type="text" />
+      <input data-action="guess" data-action-event="click" data-action-payload="guess-text" type="button" value="Guess"/>
     </div>
     <div id="layout-answers">
       <quiz-answer answer="happiness"></quiz-answer>
