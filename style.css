@@ -49,6 +49,12 @@ body {
   margin: 0em;
 }
 
+.badge {
+  display: inline-block;
+  width: 1.5em;
+  text-align: center;
+}
+
 #layout-answers {
   grid-area: answers;
   text-align: center;
