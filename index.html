@@ -13,22 +13,23 @@
   </head>
   <body>
     <flower-layout id="layout-letters">
-      <div slot="center">H</div>
-      <div>A</div>
-      <div>P</div>
-      <div>P</div>
-      <div>I</div>
-      <div>N</div>
-      <div>E</div>
-      <div>S</div>
-      <div>S</div>
+      <div slot="center"></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
     </flower-layout>
     <div id="layout-guess">
+      <input data-action="new-word" data-action-event="click" type="button" value="New Word" />
+      <br />
       <input data-action="guess" data-action-event="keyup" data-action-keycode="Enter" id="guess-text" type="text" />
       <input data-action="guess" data-action-event="click" data-action-payload="guess-text" type="button" value="Guess"/>
     </div>
     <div id="layout-answers">
-      <quiz-answer answer="happiness"></quiz-answer>
     </div>
   </body>
 </html>
