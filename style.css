@@ -12,10 +12,11 @@ body {
 }
 
 #layout-letters {
+  grid-area: letters;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
-  grid-area: letters;
 }
 #layout-letters div {
   display: flex;
