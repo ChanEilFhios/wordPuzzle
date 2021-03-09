@@ -35,10 +35,18 @@ state.registerAction("new-word", state => setupGame())
 state.registerAction("end-game", state => ({...state, gameOver: true}))
 state.registerAction("guess", (state, payload) => {
   const foundIdx = state.words.findIndex(word => word.word === payload)
+  let wasGuessed = false
 
   if (foundIdx > -1 && !state.gameOver) {
+    wasGuessed = state.words[foundIdx].guessed
     state.words[foundIdx].guessed = true
   }
+
+  state.guesses.push({
+    guess: payload,
+    correct: foundIdx > -1,
+    repeat: wasGuessed
+  })
 
   return state
 })
