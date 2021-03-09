@@ -36,7 +36,7 @@ state.registerAction("end-game", state => ({...state, gameOver: true}))
 state.registerAction("guess", (state, payload) => {
   const foundIdx = state.words.findIndex(word => word.word === payload)
 
-  if (foundIdx > -1) {
+  if (foundIdx > -1 && !state.gameOver) {
     state.words[foundIdx].guessed = true
   }
 
@@ -74,7 +74,7 @@ state.registerRenderer(attachRenderer("#layout-answers", (state, element) => {
       }
     }
 
-    if (word.guessed) {
+    if (word.guessed || state.gameOver) {
       newChild.show = "true"
     }
     element.appendChild(newChild)
