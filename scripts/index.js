@@ -68,7 +68,7 @@ state.registerRenderer(attachRenderer("#layout-answers", (state, element) => {
       existing = existing.slice(1)
     } else {
       newChild = document.createElement('quiz-answer', {is: 'quiz-answer'})
-      newChild.answer = word.word
+      newChild.answer = word.word.toUpperCase()
       if (word.word.length === 9) {
         newChild.classList.add("nine")
       }
@@ -77,6 +77,9 @@ state.registerRenderer(attachRenderer("#layout-answers", (state, element) => {
     if (word.guessed || state.gameOver) {
       newChild.show = "true"
       newChild.status = word.guessed ? 'correct' : 'incorrect'
+      if (state.gameOver) {
+        newChild.answer = `${word.word.toUpperCase()}(${word.level})`
+      }
     }
     element.appendChild(newChild)
 
