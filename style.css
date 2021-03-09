@@ -55,6 +55,10 @@ body {
   text-align: center;
 }
 
+#percents > * {
+  margin: 0em;
+}
+
 #layout-answers {
   grid-area: answers;
   text-align: center;
