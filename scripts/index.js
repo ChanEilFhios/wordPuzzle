@@ -32,6 +32,7 @@ const attachRenderer = (elementSelector, renderer) => {
 window.state = state
 
 state.registerAction("new-word", state => setupGame())
+state.registerAction("end-game", state => ({...state, gameOver: true}))
 state.registerAction("guess", (state, payload) => {
   const foundIdx = state.words.findIndex(word => word.word === payload)
 
