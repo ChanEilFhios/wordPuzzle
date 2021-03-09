@@ -5,10 +5,11 @@
 body {
   display: grid;
   grid-template-columns: 300px 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 300px 1fr;
   grid-template-areas: 
     "letters answers"
     "guess answers";
+  height: 100vh;
 }
 
 #layout-letters {

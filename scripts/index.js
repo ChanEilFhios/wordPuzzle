@@ -42,7 +42,7 @@ state.registerAction("guess", (state, payload) => {
     state.words[foundIdx].guessed = true
   }
 
-  state.guesses.push({
+  state.guesses.unshift({
     guess: payload,
     correct: foundIdx > -1,
     repeat: wasGuessed
@@ -93,6 +93,9 @@ state.registerRenderer(attachRenderer("#layout-answers", (state, element) => {
 
     return existing
   }, oldChildren)
+}))
+state.registerRenderer(attachRenderer('#guesses', (state, element) => {
+  element.innerHTML = state.guesses.slice(0, 10).map(guess => `<p>${guess.guess}</p>`).join('')
 }))
 
 state.initializeState(setupGame())
