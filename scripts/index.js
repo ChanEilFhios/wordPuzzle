@@ -95,7 +95,11 @@ state.registerRenderer(attachRenderer("#layout-answers", (state, element) => {
   }, oldChildren)
 }))
 state.registerRenderer(attachRenderer('#guesses', (state, element) => {
-  element.innerHTML = state.guesses.slice(0, 10).map(guess => `<p>${guess.guess}</p>`).join('')
+  const calcBadge = guess => guess.correct ?
+                              guess.repeat ?
+                                'R' : '√'
+                              : 'X'
+  element.innerHTML = state.guesses.slice(0, 10).map(guess => `<p>${calcBadge(guess)} ${guess.guess}</p>`).join('')
 }))
 
 state.initializeState(setupGame())
