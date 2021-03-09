@@ -13,7 +13,7 @@ body {
 
 #layout-letters {
   grid-area: letters;
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,6 +43,8 @@ body {
   display: flex;
   align-content: flex-start;
   flex-wrap: wrap;
+
+  font-family: monospace;
 }
 
 quiz-answer {

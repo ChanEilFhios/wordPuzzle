@@ -76,6 +76,7 @@ state.registerRenderer(attachRenderer("#layout-answers", (state, element) => {
 
     if (word.guessed || state.gameOver) {
       newChild.show = "true"
+      newChild.status = word.guessed ? 'correct' : 'incorrect'
     }
     element.appendChild(newChild)
 
