@@ -133,7 +133,7 @@ state.registerRenderer(attachRenderer('#guesses', (state, element) => {
 }))
 
 state.registerRenderer(attachRenderer('#percents', (state, element) => {
-  const renderPercent = level => `${level.toUpperCase()} - ${state.counts[level].found}/${state.counts[level].total}`
+  const renderPercent = level => `${level.toUpperCase()} - ${state.counts[level].found}/${state.counts[level].total} (${Math.round(state.counts[level].found/state.counts[level].total * 100)}%)`
   element.innerHTML = `
     <p>${renderPercent('a')} ${renderPercent('b')}</p>
     <p>${renderPercent('c')} ${renderPercent('d')}</p>
