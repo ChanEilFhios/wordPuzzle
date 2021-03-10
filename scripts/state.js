@@ -7,7 +7,7 @@ const fetchPayload = (elementId, parent) => {
 
   return () => {
     if (payloadElement) {
-      const value = payloadElement.value
+      const value = payloadElement.value.toLowerCase()
       payloadElement.value = ''
       return value
     }

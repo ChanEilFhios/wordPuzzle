@@ -5,20 +5,40 @@ const collectWords = (words, requiredLetter) => words
 .filter(wordEntry => wordEntry.word.includes(requiredLetter))
 .map(wordEntry => ({word: wordEntry.word, level: wordEntry.level, guessed: false}))
 const collectSubWords = (subWords, requiredLetter) => subWords.flatMap(key => collectWords(allWords[key].words, requiredLetter))
+const countWords = (words, level) => words.filter(word => word.level === level).length
 
 function setupGame() {
   const answerWord = getRandomFromArray(nines)
   const answerLetters = answerWord.split('')
   const requiredLetterIndex = getRandomIndexFromArray(answerLetters)
+  const words = collectSubWords(allWords[sortCharsInStr(answerWord)].subwords, answerLetters[requiredLetterIndex])
+                .sort((a, b) => (a.word < b.word) ? -1 : 1)
   
   return {
     answerWord,
     requiredLetter: answerLetters[requiredLetterIndex],
     optionalLetters: randomizeArray(answerLetters.filter((a, idx) => idx !== requiredLetterIndex)),
-    words: collectSubWords(allWords[sortCharsInStr(answerWord)].subwords, answerLetters[requiredLetterIndex])
-        .sort((a, b) => (a.word < b.word) ? -1 : 1),
+    words,
     guesses: [],
-    gameOver: false
+    gameOver: false,
+    counts: {
+      a: {
+        found: 0,
+        total: countWords(words, 'a')
+      },
+      b: {
+        found: 0,
+        total: countWords(words, 'b')
+      },
+      c: {
+        found: 0,
+        total: countWords(words, 'c')
+      },
+      d: {
+        found: 0,
+        total: countWords(words, 'd')
+      }
+    }
   }
 }
 
@@ -40,13 +60,19 @@ state.registerAction("guess", (state, payload) => {
   if (foundIdx > -1 && !state.gameOver) {
     wasGuessed = state.words[foundIdx].guessed
     state.words[foundIdx].guessed = true
+
+    if (!wasGuessed) {
+      state.counts[state.words[foundIdx].level].found ++
+    }
   }
 
-  state.guesses.unshift({
-    guess: payload,
-    correct: foundIdx > -1,
-    repeat: wasGuessed
-  })
+  if (!state.gameOver) {
+    state.guesses.unshift({
+      guess: payload,
+      correct: foundIdx > -1,
+      repeat: wasGuessed
+    })  
+  }
 
   return state
 })
@@ -104,6 +130,14 @@ state.registerRenderer(attachRenderer('#guesses', (state, element) => {
                                       'repeat' : 'correct'
                                     : 'incorrect'
   element.innerHTML = state.guesses.slice(0, 10).map(guess => `<p class="${calcGuessStyle(guess)}"><span class="badge">${calcBadge(guess)}</span> ${guess.guess}</p>`).join('')
+}))
+
+state.registerRenderer(attachRenderer('#percents', (state, element) => {
+  const renderPercent = level => `${level.toUpperCase()} - ${state.counts[level].found}/${state.counts[level].total}`
+  element.innerHTML = `
+    <p>${renderPercent('a')} ${renderPercent('b')}</p>
+    <p>${renderPercent('c')} ${renderPercent('d')}</p>
+  `
 }))
 
 state.initializeState(setupGame())
