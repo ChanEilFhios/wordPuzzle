@@ -1,5 +1,5 @@
-import {randomizeArray, getRandomIndexFromArray, getRandomFromArray, sortCharsInStr} from './utilities'
-import state from './state'
+import {randomizeArray, getRandomIndexFromArray, getRandomFromArray, sortCharsInStr} from './utilities.js'
+import state from './state.js'
 
 const collectWords = (words, requiredLetter) => words
 .filter(wordEntry => wordEntry.word.includes(requiredLetter))
